@@ -62,10 +62,11 @@
 				var canvasImages = this.meme.canvasImages;
 				for (var i = 0; i < this.meme.images.length; i++) {
 					var img = new Image();
-					img.crossOrigin="anonymous"
+					img.crossOrigin="anonymous";
 					this.meme.canvasImages.push(img);
 					img.onload = function() {
-					imgCount++;
+						imgCount++;
+						//on the last one
 						if (imgCount >= canvasImages.length) {
 							// imgs[] now contains all your images in imgURLs[] order
 							for (var x in canvasImages){
