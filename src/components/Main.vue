@@ -1,10 +1,8 @@
 <template>
-	<Search/>
-	<!-- <v-container>
-		
+	 <v-container>
 		<v-row xs="12" dense>
 			<v-col cols="10">
-				
+				<Search/>
 			</v-col>
 			<v-col cols="2">
 				<v-card
@@ -24,7 +22,7 @@
 				<v-btn large> <v-icon>mdi-content-save</v-icon> Save </v-btn>
 			</v-col>
 		</v-row>
-	</v-container> -->
+	</v-container> 
 </template>
 
 <script>
@@ -48,14 +46,17 @@
 			};
 		},
 		methods: {
-			DrawImagesToCanvas() {
+			DrawImagesToCanvas(image) {
+				var canvas = this.canvas;
+				canvas.clearRect(0, 0, canvas.canvas.width, canvas.canvas.height);
 				//reset
 				this.meme.canvasImages = [];
 				this.imgCount = 0;
+				//add new image
+				this.meme.images[1] = image;
 				//store refs for anonymous functions
 				var imgCount = this.meme.imgCount;
 				var canvasImages = this.meme.canvasImages;
-				var canvas = this.canvas;
 				for (var i = 0; i < this.meme.images.length; i++) {
 					var img = new Image();
 					this.meme.canvasImages.push(img);
@@ -83,23 +84,27 @@
 					};
 					img.src = this.meme.images[i];
 				}
-				
 			},
 		},
-		mountedEl() {
+		mounted() {
 			const canvas = this.$refs.canvas.getContext("2d");
 			this.canvas = canvas;
 			var width = this.$refs.canvasCard.$el.offsetWidth;
 			console.log(width);
 			canvas.canvas.width = width;
 			canvas.canvas.height = width;
-			this.DrawImagesToCanvas();
+			this.DrawImagesToCanvas(tempImg);
+			this.$root.$on('set-image', (item) =>{
+				//console.log('setting image', item.contentUrl);
+				this.DrawImagesToCanvas(item.contentUrl);
+			})
 		},
+		
 	};
 </script>
 
 <style>
 	canvas {
-		background-color: bisque;
+		background-color: transparent;
 	}
 </style>
