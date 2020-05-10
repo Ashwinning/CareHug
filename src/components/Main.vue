@@ -1,8 +1,10 @@
 <template>
-	<v-container>
+	<Search/>
+	<!-- <v-container>
+		
 		<v-row xs="12" dense>
 			<v-col cols="10">
-				<v-card><v-card-text>Search</v-card-text></v-card>
+				
 			</v-col>
 			<v-col cols="2">
 				<v-card
@@ -22,15 +24,19 @@
 				<v-btn large> <v-icon>mdi-content-save</v-icon> Save </v-btn>
 			</v-col>
 		</v-row>
-	</v-container>
+	</v-container> -->
 </template>
 
 <script>
+	import Search from "@/components/Search"; 
 	import hugBase from "@/assets/1ef.png";
 	import hugArms from "@/assets/036.png";
 	import tempImg from "@/assets/tmp.png";
 	export default {
 		name: "Main",
+		components:{
+			Search
+		},
 		data() {
 			return {
 				canvas: null,
@@ -66,7 +72,7 @@
 									h = canvas.canvas.height;
 								}
 								else{
-									l = canvas.canvas.width/4.5;
+									l = canvas.canvas.width/4.7;
 									t = canvas.canvas.width/2.2;
 									w = canvas.canvas.width/1.9;
 									h = canvas.canvas.height/1.9; 
@@ -80,7 +86,7 @@
 				
 			},
 		},
-		mounted() {
+		mountedEl() {
 			const canvas = this.$refs.canvas.getContext("2d");
 			this.canvas = canvas;
 			var width = this.$refs.canvasCard.$el.offsetWidth;
