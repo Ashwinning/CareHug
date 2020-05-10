@@ -19,7 +19,7 @@
 		</v-row>
 		<v-row>
 			<v-col>
-				<v-btn large> <v-icon>mdi-content-save</v-icon> Save </v-btn>
+				<v-btn large @click="saveImg"> <v-icon>mdi-content-save</v-icon> Save </v-btn>
 			</v-col>
 		</v-row>
 	</v-container> 
@@ -86,6 +86,9 @@
 					img.src = this.meme.images[i];
 				}
 			},
+			saveImg(){
+				
+			}
 		},
 		mounted() {
 			const canvas = this.$refs.canvas.getContext("2d");
