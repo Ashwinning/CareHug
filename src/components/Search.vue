@@ -35,6 +35,7 @@
 				if (val.length > 0)
 				{
 					this.showResults = true;
+					this.$root.$emit('set-search', val);
 				}
 				else {
 					this.showResults = false;

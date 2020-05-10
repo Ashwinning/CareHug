@@ -12,7 +12,7 @@
 		</v-row>
 		<v-row xs="12">
 			<v-col cols="12">
-				<v-card ref="canvasCard">
+				<v-card ref="canvasCard" class="bg" :style="{ backgroundImage: `url(${meme.bg})` }">
 					<canvas ref="canvas"></canvas>
 				</v-card>
 			</v-col>
@@ -40,9 +40,11 @@
 			return {
 				canvas: null,
 				meme: {
-					images: [transparent, hugBase, tempImg, hugArms],
+					images: [hugBase, tempImg, hugArms],
 					canvasImages: [], //These get drawn on the canvas
-					imgCount: 0
+					imgCount: 0,
+					bg: transparent,
+					search: null
 				},
 			};
 		},
@@ -54,12 +56,13 @@
 				this.meme.canvasImages = [];
 				this.imgCount = 0;
 				//add new image
-				this.meme.images[2] = image;
+				this.meme.images[1] = image;
 				//store refs for anonymous functions
 				var imgCount = this.meme.imgCount;
 				var canvasImages = this.meme.canvasImages;
 				for (var i = 0; i < this.meme.images.length; i++) {
 					var img = new Image();
+					img.crossOrigin="anonymous"
 					this.meme.canvasImages.push(img);
 					img.onload = function() {
 					imgCount++;
@@ -67,7 +70,7 @@
 							// imgs[] now contains all your images in imgURLs[] order
 							for (var x in canvasImages){
 								var l,t,w,h;
-								if (x != 2){
+								if (x != 1){
 									l = 0;
 									t = 0;
 									w = canvas.canvas.width;
@@ -87,7 +90,11 @@
 				}
 			},
 			saveImg(){
-				
+				var dataURL =this.$refs.canvas.toDataURL("image/png", 1.0).replace("image/png", "image/octet-stream");
+				var link = document.createElement('a');
+				link.download = `CareHug-${this.meme.search}.png`;
+				link.href = dataURL;
+				link.click();
 			}
 		},
 		mounted() {
@@ -102,6 +109,10 @@
 				//console.log('setting image', item.contentUrl);
 				this.DrawImagesToCanvas(item.contentUrl);
 			})
+			this.$root.$on('set-search', (val) =>{
+				//console.log('setting image', item.contentUrl);
+				this.meme.search = val;
+			})
 		},
 		
 	};
@@ -110,5 +121,8 @@
 <style>
 	canvas {
 		background-color: transparent;
+	}
+	.bg{
+		background-repeat: repeat;
 	}
 </style>
