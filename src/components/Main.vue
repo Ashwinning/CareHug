@@ -1,14 +1,14 @@
 <template>
 	 <v-container>
 		<v-row xs="12" dense>
-			<v-col cols="10">
+			<v-col cols="12">
 				<Search/>
 			</v-col>
-			<v-col cols="2">
+			<!-- <v-col cols="2">
 				<v-card
 					><v-card-text><v-icon>mdi-upload</v-icon></v-card-text></v-card
 				>
-			</v-col>
+			</v-col> -->
 		</v-row>
 		<v-row xs="12">
 			<v-col cols="12">
@@ -30,6 +30,7 @@
 	import hugBase from "@/assets/1ef.png";
 	import hugArms from "@/assets/036.png";
 	import tempImg from "@/assets/tmp.png";
+	import transparent from "@/assets/transparent.png";
 	export default {
 		name: "Main",
 		components:{
@@ -39,7 +40,7 @@
 			return {
 				canvas: null,
 				meme: {
-					images: [hugBase, tempImg, hugArms],
+					images: [transparent, hugBase, tempImg, hugArms],
 					canvasImages: [], //These get drawn on the canvas
 					imgCount: 0
 				},
@@ -53,7 +54,7 @@
 				this.meme.canvasImages = [];
 				this.imgCount = 0;
 				//add new image
-				this.meme.images[1] = image;
+				this.meme.images[2] = image;
 				//store refs for anonymous functions
 				var imgCount = this.meme.imgCount;
 				var canvasImages = this.meme.canvasImages;
@@ -66,7 +67,7 @@
 							// imgs[] now contains all your images in imgURLs[] order
 							for (var x in canvasImages){
 								var l,t,w,h;
-								if (x != 1){
+								if (x != 2){
 									l = 0;
 									t = 0;
 									w = canvas.canvas.width;
